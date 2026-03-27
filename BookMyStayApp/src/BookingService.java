@@ -1,11 +1,16 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BookingService {
 
     private RoomInventory inventory;
     private BookingRequestQueue requestQueue;
 
+    // Track all allocated room IDs (no duplicates)
     private Set<String> allocatedRoomIds;
+
+    // Map → Room Type → Set of Room IDs
     private HashMap<String, Set<String>> allocationMap;
 
     private int idCounter = 1;
@@ -24,7 +29,7 @@ public class BookingService {
 
         System.out.println("\n===== PROCESSING BOOKINGS =====\n");
 
-        // ✅ FIXED HERE
+        // ✅ Correct variable (IMPORTANT FIX)
         while (!requestQueue.isEmpty()) {
 
             Reservation request = requestQueue.getNextRequest();
@@ -34,31 +39,34 @@ public class BookingService {
 
             if (available > 0) {
 
-                // Generate unique ID
+                // Generate unique room ID
                 String roomId = generateRoomId(roomType);
 
+                // Store globally (no duplicates)
                 allocatedRoomIds.add(roomId);
 
+                // Store by room type
                 allocationMap.putIfAbsent(roomType, new HashSet<>());
                 allocationMap.get(roomType).add(roomId);
 
                 // Update inventory
                 inventory.updateAvailability(roomType, -1);
 
+                // Confirm booking
                 System.out.println("Booking Confirmed: "
                         + request.getGuestName()
                         + " | " + roomType
-                        + " | ID: " + roomId);
+                        + " | Room ID: " + roomId);
 
             } else {
                 System.out.println("Booking Failed: "
                         + request.getGuestName()
-                        + " | No rooms available");
+                        + " | No rooms available for " + roomType);
             }
         }
     }
 
-    // Unique ID generator
+    // Generate unique room ID
     private String generateRoomId(String roomType) {
 
         String id;
@@ -68,5 +76,10 @@ public class BookingService {
         } while (allocatedRoomIds.contains(id));
 
         return id;
+    }
+
+    // 🔥 IMPORTANT for Use Case 10 (Cancellation)
+    public HashMap<String, Set<String>> getAllocationMap() {
+        return allocationMap;
     }
 }
