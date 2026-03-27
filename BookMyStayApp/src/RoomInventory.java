@@ -1,4 +1,4 @@
-// Version 3.1
+// Version 12.1
 
 import java.util.HashMap;
 
@@ -10,7 +10,6 @@ public class RoomInventory {
     public RoomInventory() {
         inventory = new HashMap<>();
 
-        // Initialize availability
         inventory.put("Single Room", 10);
         inventory.put("Double Room", 5);
         inventory.put("Suite Room", 2);
@@ -18,20 +17,29 @@ public class RoomInventory {
 
     // Get availability
     public int getAvailability(String roomType) {
-        return inventory.get(roomType);
+        return inventory.getOrDefault(roomType, 0);
     }
 
     // Update availability
     public void updateAvailability(String roomType, int change) {
-        int current = inventory.get(roomType);
+        int current = inventory.getOrDefault(roomType, 0);
         inventory.put(roomType, current + change);
     }
 
-    // Display all inventory
+    // Display inventory
     public void displayInventory() {
         System.out.println("===== ROOM INVENTORY =====");
         for (String roomType : inventory.keySet()) {
             System.out.println(roomType + " : " + inventory.get(roomType));
         }
+    }
+
+    // 🔥 Needed for Use Case 12 (Persistence)
+    public HashMap<String, Integer> getInventoryMap() {
+        return inventory;
+    }
+
+    public void setInventoryMap(HashMap<String, Integer> map) {
+        this.inventory = map;
     }
 }

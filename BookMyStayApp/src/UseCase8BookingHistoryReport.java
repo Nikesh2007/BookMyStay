@@ -22,6 +22,6 @@ public class UseCase8BookingHistoryReport {
         reportService.displayAllBookings();
 
         // Generate summary
-        reportService.generateSummary();
+        reportService.generateReport();
     }
 }

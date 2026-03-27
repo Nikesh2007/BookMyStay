@@ -1,4 +1,4 @@
-// Version 8.1
+// Version 12.2 (Fully Compatible)
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ public class BookingReportService {
         this.history = history;
     }
 
-    // Display all bookings
-    public void displayAllBookings() {
+    // Primary method
+    public void displayBookings() {
 
         System.out.println("===== BOOKING HISTORY =====");
 
-        List<Reservation> list = history.getAllReservations();
+        List<Reservation> list = history.getBookings();
 
         if (list.isEmpty()) {
-            System.out.println("No bookings found.");
+            System.out.println("No bookings available.");
             return;
         }
 
@@ -27,12 +27,17 @@ public class BookingReportService {
         }
     }
 
-    // Generate summary report
-    public void generateSummary() {
+    // 🔥 Compatibility method (fixes your error)
+    public void displayAllBookings() {
+        displayBookings();
+    }
 
-        List<Reservation> list = history.getAllReservations();
+    // Report
+    public void generateReport() {
 
-        System.out.println("\n===== BOOKING SUMMARY =====");
+        List<Reservation> list = history.getBookings();
+
+        System.out.println("\n===== REPORT =====");
         System.out.println("Total Bookings: " + list.size());
     }
 }

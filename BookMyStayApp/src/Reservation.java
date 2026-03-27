@@ -1,15 +1,21 @@
-// Version 5.1
+// Version 12.1
 
-class Reservation {
+import java.io.Serializable;
+
+public class Reservation implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String guestName;
     private String roomType;
 
+    // Constructor
     public Reservation(String guestName, String roomType) {
         this.guestName = guestName;
         this.roomType = roomType;
     }
 
+    // Getters
     public String getGuestName() {
         return guestName;
     }
@@ -18,7 +24,8 @@ class Reservation {
         return roomType;
     }
 
+    // Display method
     public void displayReservation() {
-        System.out.println("Guest: " + guestName + ", Room Type: " + roomType);
+        System.out.println("Guest: " + guestName + " | Room Type: " + roomType);
     }
 }
