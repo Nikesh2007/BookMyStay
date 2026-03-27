@@ -1,23 +1,39 @@
-// Version 8.1
+// Version 12.2 (Fully Compatible)
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookingHistory {
 
-    private List<Reservation> history;
+    private List<Reservation> bookings;
 
+    // Constructor
     public BookingHistory() {
-        history = new ArrayList<>();
+        bookings = new ArrayList<>();
     }
 
-    // Add confirmed reservation
+    // ✅ Primary method
+    public void addBooking(Reservation reservation) {
+        bookings.add(reservation);
+    }
+
+    // 🔥 Compatibility method (fixes your error)
     public void addReservation(Reservation reservation) {
-        history.add(reservation);
+        bookings.add(reservation);
     }
 
-    // Get all reservations (read-only access)
+    // Get bookings
+    public List<Reservation> getBookings() {
+        return bookings;
+    }
+
+    // Compatibility method
     public List<Reservation> getAllReservations() {
-        return history;
+        return bookings;
+    }
+
+    // For persistence
+    public void setBookings(List<Reservation> bookings) {
+        this.bookings = bookings;
     }
 }
